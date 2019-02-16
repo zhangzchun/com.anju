@@ -37,3 +37,23 @@ def diaryDetail():
 def diaryPub():
     pass
 
+# 首页用户头像
+@diary.route("/diaryUserIcon/")
+def diaryUserIcon():
+    result=getDiaryUserIcon()
+    return result
+
+# 首页日记展示
+@diary.route("/diaryItem/")
+def diaryItem():
+    diary_id=request.args.get("diary_id")
+    result=getDiaryItem(diary_id)
+    return result
+
+# 首页攻略日记标题
+@diary.route("/diaryTitle/")
+def diaryTitle():
+    result = getDiaryTitle()
+    return result
+
+
