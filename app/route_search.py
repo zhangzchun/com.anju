@@ -17,7 +17,12 @@ search = Blueprint('search',__name__)
 # 搜索公司页面
 @search.route('/', methods=['GET', 'POST'])
 def searchs():
-
-    pass
+    search_condition =request.args.get("search_condition")
+    search_content = request.args.get("search_content")
+    if search_condition and search_content:
+        result = getSearchContent(search_condition,search_content)
+        return result
+    else:
+        return json.dumps({"status_code": "40005", "status_text": 
 
 
