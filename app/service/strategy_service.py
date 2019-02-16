@@ -36,4 +36,14 @@ def getStrategyDetail(id):
     # strategyDao.getStrategyDetail()
 
 
+# 首页攻略标题
+def getStrategyTitle():
+    res = stratrgy_dao.getStrategyTitle()
+    if res:
+        if res == -1:
+            return json.dumps({"status_code": "10008", "status_text": "未找到数据"})
+        else:
+            return json.dumps({"status_code": "10009", "status_text": "找到数据", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
 
