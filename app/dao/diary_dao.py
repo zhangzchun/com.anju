@@ -52,3 +52,52 @@ def getDiaryDetail():
 # 添加日记数据
 def pub():
     pass
+
+
+# 首页用户头像
+def getDiaryUserIcon():
+    try:
+        client = POOL.connection()
+        user_icon = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = diary_sql.get("getDiaryUserIcon")
+        cursor.execute(sql)
+        user_icon = cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return user_icon
+    
+# 首页日记展示
+def getDiaryItem(id):
+    try:
+        client = POOL.connection()
+        diary_item=None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = diary_sql.get("getDiaryItem").format(diary_id=id)
+        cursor.execute(sql)
+        diary_item=cursor.fetchone() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return diary_item
+    
+# 首页攻略日记标题
+def getDiaryTitle():
+    try:
+        client = POOL.connection()
+        diary_title=None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = diary_sql.get("getDiaryTitle")
+        cursor.execute(sql)
+        diary_title=cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return diary_title
