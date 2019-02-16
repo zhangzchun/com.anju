@@ -3,6 +3,10 @@
 
 import jwt
 from app.config import SECRECT_KEY
+from functools import wraps
+import json
+
+
 def createToken(user_id):
     import datetime
     import hashlib
@@ -28,3 +32,18 @@ def checkToken(token):
         return decoded['user_id']
     except jwt.ExpiredSignatureError as ex:
         return None
+
+
+
+def checkLogin(request):
+    def decorated(func):
+        @wraps(func)
+        def wrapper():
+            try:
+                token=request.headers.get('token')
+                decoded = jwt.decode(token, SECRECT_KEY, audience='webkit', algorithms=['HS256'])
+                return func()
+            except jwt.ExpiredSignatureError as ex:
+                return json.dumps({"status_code":"10006","status_text":"登录过期"})
+        return wrapper
+    return decorated
