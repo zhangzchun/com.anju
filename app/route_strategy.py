@@ -32,3 +32,9 @@ def strategyDetail():
     else:
         return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
 
+    
+# 首页攻略标题
+@strategy.route("/strategyTitle/")
+def strategyTitle():
+    result = getStrategyTitle()
+    return result
