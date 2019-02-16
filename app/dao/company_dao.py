@@ -29,8 +29,22 @@ def getCompanyList():
         client.close()
         return company
 
-
-
+# 首页公司列表
+def getIndexCompanyList():
+    try:
+        client = POOL.connection()
+        company = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        # 4. 准备sql语句
+        sql = company_sql.sql_company.get('getIndexCompanyList')
+        cursor.execute(sql)
+        company = cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return company
 
 # 公司筛选数据
 def getCompanyScreen(condition):
