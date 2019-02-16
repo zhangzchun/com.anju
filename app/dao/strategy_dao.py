@@ -43,4 +43,19 @@ def getStrategyDetail():
         return strategy_detail
 
 
+# 首页攻略标题
+def getStrategyTitle():
+    try:
+        client = POOL.connection()
+        strategy_title=None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = strategy_sql.get("getStrategyTitle")
+        cursor.execute(sql)
+        strategy_title=cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return strategy_title
 
