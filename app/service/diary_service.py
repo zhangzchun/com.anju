@@ -57,6 +57,48 @@ def getDiaryDetail(id):
     # diaryDao.getDiaryDetail()
 
 
+# 获取用户头像
+def getDiaryUserIcon():
+    res = diary_dao.getDiaryUserIcon()
+    if res:
+        if res == -1:
+            return json.dumps({"status_code": "10008", "status_text": "未找到数据"})
+        else:
+            for r in res:
+                r["icon"]=r["icon"][1:]
+            return json.dumps({"status_code": "10009", "status_text": "找到数据", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+
+# 首页日记展示
+def getDiaryItem(id):
+    res = diary_dao.getDiaryItem(id)
+    if res:
+        if res == -1:
+            return json.dumps({"status_code":"10008","status_text":"未找到数据"})
+        else:
+            diary_img = res["diary_img"].split(",")
+            if len(diary_img)>2:
+                diary_img=diary_img[0:2]
+            for d in range(len(diary_img)):
+                diary_img[d]=diary_img[d][1:]
+            res["diary_img"] = diary_img
+            res["icon"]=res["icon"][1:]
+            return json.dumps({"status_code": "10009", "status_text": "找到数据", "content":res})
+    else:
+        return json.dumps({"status_code":"40004","status_text":"系统错误"})
+
+# 首页攻略日记标题
+def getDiaryTitle():
+    res = diary_dao.getDiaryTitle()
+    if res:
+        if res == -1:
+            return json.dumps({"status_code": "10008", "status_text": "未找到数据"})
+        else:
+            return json.dumps({"status_code": "10009", "status_text": "找到数据", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+
 
 if __name__ == '__main__':
     print(getDiaryDetail(1))
