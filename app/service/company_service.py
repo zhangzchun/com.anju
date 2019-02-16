@@ -21,6 +21,21 @@ def getCompanyList():
     # companyDao.getCompanyList()
 
 
+# 首页公司列表接口
+def getIndexCompanyList():
+    res = com_list.getIndexCompanyList()
+    if res:
+        if res == -1:
+            return json.dumps({"status_code": "10008", "status_text": "数据不存在"})
+        else:
+            for r in res:
+                r["company_icon"]=r["company_icon"][1:]
+                r["c_img"]=r["c_img"][1:]
+            return json.dumps({"status_code": "10009", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+
+
 # 公司筛选接口
 def getCompanyScreen(condition):
 
