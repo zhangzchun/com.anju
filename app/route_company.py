@@ -18,6 +18,12 @@ def companyList():
     res = getCompanyList()
     return res
 
+# 首页公司列表
+@company.route('/indexCompanyList/', methods=['GET'])
+def indexCompanyList():
+    res = getIndexCompanyList()
+    return res
+
 # 公司筛选页面
 @company.route('/companyScreen/', methods=['GET','POST'])
 def companyScreen():
