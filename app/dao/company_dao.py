@@ -1,6 +1,3 @@
-
-
-
 # 公司模块
 from . import POOL
 import pymysql
@@ -36,7 +33,7 @@ def getIndexCompanyList():
         company = None
         cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
         # 4. 准备sql语句
-        sql = company_sql.sql_company.get('getIndexCompanyList')
+        sql = company_sql.get('getIndexCompanyList')
         cursor.execute(sql)
         company = cursor.fetchall() or -1
         client.commit()

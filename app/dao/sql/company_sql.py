@@ -4,7 +4,7 @@ company_sql={
 
 
     'getCompanyList': 'select c.id,c.name,c.contact_tel,c.case_num,c.work_site_num,c.company_icon, ci.name c_img from company c,company_img ci where c.id=ci.company_id',
-    
+
     'getIndexCompanyList': 'select c.id,c.name,c.company_icon, ci.name c_img from company c,company_img ci where c.id=ci.company_id limit 8',
     
 

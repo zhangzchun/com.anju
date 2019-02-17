@@ -59,7 +59,7 @@ def getDiaryDetail(id):
 
 # 获取用户头像
 def getDiaryUserIcon():
-    res = diary_dao.getDiaryUserIcon()
+    res = diaryDao.getDiaryUserIcon()
     if res:
         if res == -1:
             return json.dumps({"status_code": "10008", "status_text": "未找到数据"})
@@ -72,7 +72,7 @@ def getDiaryUserIcon():
 
 # 首页日记展示
 def getDiaryItem(id):
-    res = diary_dao.getDiaryItem(id)
+    res = diaryDao.getDiaryItem(id)
     if res:
         if res == -1:
             return json.dumps({"status_code":"10008","status_text":"未找到数据"})
@@ -90,7 +90,7 @@ def getDiaryItem(id):
 
 # 首页攻略日记标题
 def getDiaryTitle():
-    res = diary_dao.getDiaryTitle()
+    res = diaryDao.getDiaryTitle()
     if res:
         if res == -1:
             return json.dumps({"status_code": "10008", "status_text": "未找到数据"})

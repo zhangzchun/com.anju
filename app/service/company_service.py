@@ -23,7 +23,7 @@ def getCompanyList():
 
 # 首页公司列表接口
 def getIndexCompanyList():
-    res = com_list.getIndexCompanyList()
+    res = companyDao.getIndexCompanyList()
     if res:
         if res == -1:
             return json.dumps({"status_code": "10008", "status_text": "数据不存在"})
@@ -93,4 +93,4 @@ def getCompanyDetail(id):
     # companyDao.getCompanyDetail()
 
 if __name__ == '__main__':
-    print(getCompanyDetail(3))
+    print(getIndexCompanyList())

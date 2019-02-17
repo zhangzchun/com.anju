@@ -27,7 +27,7 @@ def getDiaryList():
 
 
 # 日记详情数据
-def getDiaryDetail():
+def getDiaryDetail(id):
     try:
         client = POOL.connection()
         diary_info01=None

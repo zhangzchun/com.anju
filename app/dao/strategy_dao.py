@@ -27,7 +27,7 @@ def getStrategyList():
 
 
 # 攻略详情数据
-def getStrategyDetail():
+def getStrategyDetail(id):
     try:
         client = POOL.connection()
         strategy_detail=None

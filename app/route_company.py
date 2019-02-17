@@ -13,7 +13,7 @@ company = Blueprint('company',__name__)
 # restful api
 
 # 公司列表页面
-@company.route('/companyList/', methods=['POST'])
+@company.route('/companyList/', methods=['GET'])
 def companyList():
     res = getCompanyList()
     return res
