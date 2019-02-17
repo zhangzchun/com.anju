@@ -23,6 +23,6 @@ def searchs():
         result = getSearchContent(search_condition,search_content)
         return result
     else:
-        return json.dumps({"status_code": "40005", "status_text": 
+        return json.dumps({"status_code": "40005", "status_text": "数据格式错误"})
 
 
