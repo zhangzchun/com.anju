@@ -56,6 +56,7 @@ def companyDetail():
     company_id = request.args.get("company_id")
     if company_id:
         result = getCompanyDetail(company_id)
+        print(result)
         return result
     else:
         return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})

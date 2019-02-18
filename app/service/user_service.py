@@ -29,7 +29,7 @@ def addUser(user):
 
                 response = make_response()
                 response.data = json.dumps({"status_code":"10001","status_text":"注册成功",
-                                            "token": token,"user_id":rr['id']})
+                                            "token": token,"user_id":rr['id'],"nickname":rr['nickname']})
                 response.status_code = 200
                 return response
                 # return json.dumps({"status_code":"10001","status_text":"注册成功"})
@@ -56,7 +56,7 @@ def getUser(user):
 
                 response = make_response()
                 response.data = json.dumps({"status_code": "10003", "status_text": "登录成功",
-                                            "token": token,"user_id":res_user['id']})
+                                            "token": token,"user_id":res_user['id'],"nickname":res_user['nickname']})
                 response.status_code = 200
                 return response
             else:
