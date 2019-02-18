@@ -4,6 +4,7 @@
 from flask import Blueprint,request
 # 导入user_service模块
 from app.service.user_service import *
+from app.utils.my_token import checkLogin
 
 import json
 
@@ -39,6 +40,12 @@ def login():
     else:
         return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
 
+
+# 检查token是否过期
+@user.route('/checkToken/',methods=['GET'])
+@checkLogin(request)
+def checkToken():
+    return json.dumps({"status_code":"10003","status_text":"登录成功"})
 
 # 修改用户信息页面
 

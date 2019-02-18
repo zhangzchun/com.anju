@@ -7,7 +7,7 @@ import json
 # 搜索接口
 def getSearchContent(search_condition,search_content):
     if search_condition and search_condition=="装修公司":
-        res = getCompanyList(search_content)
+        res = searchDao.getCompanyList(search_content)
         if res:
             if res == -1:
                 return json.dumps({"status_code": "10008", "status_text": "未找到数据"})
@@ -17,7 +17,7 @@ def getSearchContent(search_condition,search_content):
             return json.dumps({"status_code": "40004", "status_text": "系统错误"})
 
     elif search_condition and search_condition=="装修攻略":
-        res=getStrategyList(search_content)
+        res= searchDao.getStrategyList(search_content)
         if res:
             if res == -1:
                 return json.dumps({"status_code": "10008", "status_text": "未找到数据"})
@@ -27,7 +27,7 @@ def getSearchContent(search_condition,search_content):
             return json.dumps({"status_code": "40004", "status_text": "系统错误"})
 
     elif search_condition and search_condition=="装修日记":
-        res = getDiaryList(search_content)
+        res = searchDao.getDiaryList(search_content)
         if res:
             if res == -1:
                 return json.dumps({"status_code": "10008", "status_text": "未找到数据"})
