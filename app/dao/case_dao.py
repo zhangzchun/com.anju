@@ -9,13 +9,13 @@ from app.dao.sql.case_sql import case_sql
 
 
 # 案例列表数据
-def getCaseList():
+def getCaseList(id):
     try:
         client = POOL.connection()
         case = None
         cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
         # 4. 准备sql语句
-        sql = case_sql.get('getCaseList')
+        sql = case_sql.get('getCaseList').format(company_id=id)
 
         # sql = sql_user.get('addUser').format(telephone=user['telephone'], password=user['password'])
         # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
@@ -65,7 +65,7 @@ def getCaseScreen(condition):
         return case
 
 # 案例详情数据
-def getCaseDetail():
+def getCaseDetail(id):
     try:
         client = POOL.connection()
         case = None

@@ -13,13 +13,13 @@ company = Blueprint('company',__name__)
 # restful api
 
 # 公司列表页面
-@company.route('/companyList/', methods=['GET'])
+@company.route('/companyList/', methods=['GET','POST'])
 def companyList():
     res = getCompanyList()
     return res
 
 # 首页公司列表
-@company.route('/indexCompanyList/', methods=['GET'])
+@company.route('/indexCompanyList/', methods=['GET','POST'])
 def indexCompanyList():
     res = getIndexCompanyList()
     return res
@@ -51,7 +51,7 @@ def companySort():
 
 
 # 公司详情页面
-@company.route('/companyDetail/', methods=['GET'])
+@company.route('/companyDetail/', methods=['GET','POST'])
 def companyDetail():
     company_id = request.args.get("company_id")
     if company_id:

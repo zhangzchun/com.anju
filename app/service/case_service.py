@@ -6,8 +6,8 @@ import json
 
 
 # 案例列表接口
-def getCaseList():
-    res = caseDao.getCaseList()
+def getCaseList(id):
+    res = caseDao.getCaseList(id)
     if res:
         if res == -1:
             return json.dumps({"status_code": "10008", "status_text": "数据不存在"})

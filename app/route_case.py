@@ -16,8 +16,12 @@ case = Blueprint('case',__name__)
 # 案例列表页面
 @case.route('/caseList/',methods=['GET','POST'])
 def caseList():
-    res = getCaseList()
-    return res
+    company_id = request.args.get("company_id")
+    if company_id:
+        res = getCaseList(company_id)
+        return res
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
 
 
 # 案例筛选页面
@@ -37,7 +41,7 @@ def caseScreen():
 
 
 # 案例详情页面
-@case.route('/caseScreen/',methods=['GET','POST'])
+@case.route('/caseDetail/',methods=['GET','POST'])
 def caseDetail():
     case_id = request.args.get("case_id")
     if case_id:
