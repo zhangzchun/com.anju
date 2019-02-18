@@ -24,6 +24,8 @@ def designerList():
     return res
 
 
+
+
 # 设计师详情页面
 @designer.route('/designerDetail/', methods=['GET','POST'])
 def designerDetail():

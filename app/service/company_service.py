@@ -13,7 +13,7 @@ def getCompanyList():
         if res == -1:
             return json.dumps({"status_code": "10008", "status_text": "数据不存在"})
         else:
-            return json.dumps({"status_code": "10009", "content": res})
+            return json.dumps({"status_code": "10009", "status_text":"找到数据","content": res})
     else:
         return json.dumps({"status_code": "40004", "status_text": "系统错误"})
 
@@ -31,7 +31,7 @@ def getIndexCompanyList():
             for r in res:
                 r["company_icon"]=r["company_icon"][1:]
                 r["c_img"]=r["c_img"][1:]
-            return json.dumps({"status_code": "10009", "content": res})
+            return json.dumps({"status_code": "10009", "status_text":"找到数据","content": res})
     else:
         return json.dumps({"status_code": "40004", "status_text": "系统错误"})
 
@@ -44,7 +44,7 @@ def getCompanyScreen(condition):
         if res == -1:
             return json.dumps({"status_code": "10008", "status_text": "数据不存在"})
         else:
-            return json.dumps({"status_code": "10009", "content": res})
+            return json.dumps({"status_code": "10009", "status_text":"找到数据","content": res})
     else:
         json.dumps({"status_code": "40004", "status_text": "系统错误"})
 
@@ -69,7 +69,7 @@ def getCompanySort(c):
         if res == -1:
             return json.dumps({"status_code": "10008", "status_text": "数据不存在"})
         else:
-            return json.dumps({"status_code": "10009", "content": res})
+            return json.dumps({"status_code": "10009","status_text":"找到数据", "content": res})
     else:
         return json.dumps({"status_code": "40004", "status_text": "系统错误"})
     # 提醒

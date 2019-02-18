@@ -2,9 +2,12 @@
 search_sql={
     "getCompanyList":"select c.id,c.name,c.contact_tel,c.case_num,c.work_site_num,c.company_icon, ci.name c_img \
                       from company c,company_img ci where c.id=ci.company_id and c.name like '%{search_content}%'",
+
+
     "getStrategyList":"select s.id strategy_id , si.strategy_img , s.strategy_title , sc.lead , s.author \
                         from strategy s inner join strategy_img si INNER JOIN strategy_content sc \
                         on s.id=si.strategy_id and s.id = sc.strategy_id where s.strategy_title like '%{search_content}%'",
+
 
     "getDiaryList":"SELECT d.id diary_id ,u.nickname , ui.icon , d.diary_title , s.`name` style_name ,d.company , d.public_date,\
                     dc.diary_content,(SELECT group_concat(di.diary_img) FROM diary_img di WHERE di.diary_content_id = dc.id and dc.diary_id=d.id) diary_img \

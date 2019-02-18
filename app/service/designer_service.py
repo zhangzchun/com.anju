@@ -13,7 +13,7 @@ def getDesignerList(company_id):
         if res == -1:
             return json.dumps({"status_code": "10008", "status_text": "数据不存在"})
         else:
-            return json.dumps({"status_code": "10009", "content": res})
+            return json.dumps({"status_code": "10009", "status_text":"找到数据","content": res})
     else:
         return json.dumps({"status_code": "40004", "status_text": "系统错误"})
 
@@ -25,12 +25,12 @@ def getDesignerList(company_id):
 
 # 设计师详情接口
 def getDesignerDetail(designer_id):
-    res = designerDao.getCaseList(designer_id)
+    res = designerDao.getDesignerDetail(designer_id)
     if res:
         if res == -1:
             return json.dumps({"status_code": "10008", "status_text": "数据不存在"})
         else:
-            return json.dumps({"status_code": "10009", "content": res})
+            return json.dumps({"status_code": "10009", "status_text":"找到数据","content": res})
     else:
         return json.dumps({"status_code": "40004", "status_text": "系统错误"})
 

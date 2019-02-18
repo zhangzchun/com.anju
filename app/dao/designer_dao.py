@@ -12,21 +12,22 @@ from app.dao.sql.designer_sql import designer_sql
 def getDesignerList(company_id):
     try:
         client = POOL.connection()
-        case = None
+        designer_detail = None
         cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
         # 4. 准备sql语句
-        sql = designer_sql.get('getDesignerList').format(id=company_id)
+        sql = designer_sql.get('getDesignerDetail').format(id=designer_id)
 
         # sql = sql_user.get('addUser').format(telephone=user['telephone'], password=user['password'])
         # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
         cursor.execute(sql)
-        designer_list = cursor.fetchall() or -1
+        designer_detail = cursor.fetchall() or -1
         client.commit()
     except Exception as ex:
         client.rollback()
     finally:
         client.close()
-        return designer_list
+        # print(designer_detail)
+        return designer_detail
 
 
 
