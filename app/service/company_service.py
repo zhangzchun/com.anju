@@ -79,15 +79,15 @@ def getCompanySort(c):
 # 公司详情接口
 def getCompanyDetail(id):
 
-    res=companyDao.getCompanyDetail(id)
-
+    res = companyDao.getCompanyDetail(id)
     if res:
         if res == -1:
-            return json.dumps({"status_code":"10008","status_text":"未找到数据"})
+            return json.dumps({"status_code": "10008", "status_text": "未找到数据"})
         else:
-            return json.dumps({"status_code":"10009","status_text":"找到数据","content":res})
+            # print(res)
+            return json.dumps({"status_code": "10009", "status_text": "找到数据", "content": res})
     else:
-        return json.dumps({"status_code":"40004","status_text":"系统错误"})
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
 
     # 提醒
     # companyDao.getCompanyDetail()

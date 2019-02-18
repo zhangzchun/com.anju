@@ -96,14 +96,13 @@ def getCompanySort(s):
 
 # 公司详情数据
 def getCompanyDetail(id):
-
     try:
         client = POOL.connection()
         company_detail = None
         cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
-        sql=company_sql.get("getCompanyDetail").format(id=id)
+        sql=company_sql.get('getCompanyDetail').format(id=id)
         cursor.execute(sql)
-        company_detail=cursor.fetchone() or -1
+        company_detail=cursor.fetchall() or -1
         client.commit()
     except Exception as ex:
         client.rollback()

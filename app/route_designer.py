@@ -19,14 +19,14 @@ designer = Blueprint('designer',__name__)
 @designer.route('/designerList/', methods=['GET','POST'])
 def designerList():
 
-    res = getDesignerList()
+    company_id = request.args.get("company_id")
+    res = getDesignerList(company_id)
     return res
-
 
 
 # 设计师详情页面
 @designer.route('/designerDetail/', methods=['GET','POST'])
 def designerDetail():
-
-    res = getDesignerDetail()
+    designer_id = request.args.get("designer_id")
+    res = getDesignerDetail(designer_id)
     return res
