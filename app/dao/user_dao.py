@@ -64,3 +64,146 @@ def getUserByTel(tel):
 # 修改用户数据
 def updateUser(user):
     pass
+
+
+
+
+# 获取用户房屋信息数据
+def getHouseList(id):
+    try:
+        client = POOL.connection()
+        res_house = -1
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        # 4. 准备sql语句
+        sql = user_sql.get('getHouseList').format(id=id)
+
+        # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
+        cursor.execute(sql)
+        res_house = cursor.fetchall()
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return res_house
+
+
+
+# 添加用户预约数据
+def addAppointment(appoint):
+    try:
+        client = POOL.connection()
+        res_appoint = -1
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        # 4. 准备sql语句
+        sql = user_sql.get('addAppointment').format(house_id=appoint['house_id'],
+                                                    company_id=appoint['company_id'],
+                                                    user_id=appoint['user_id'])
+
+        # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
+
+        res_appoint = cursor.execute(sql)
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return res_appoint
+
+
+def subAppointment(appoint):
+    try:
+        client = POOL.connection()
+        res_appoint = -1
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        # 4. 准备sql语句
+        sql = user_sql.get('subAppointment').format(house_id=appoint['house_id'],
+                                                    company_id=appoint['company_id'],
+                                                    user_id=appoint['user_id'])
+
+        # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
+
+        res_appoint = cursor.execute(sql)
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return res_appoint
+
+
+
+# 修改房屋状态数据
+def updateHouse(house_id):
+    pass
+
+
+
+
+# 用户收藏数据
+
+def getCollectDetail(collect):
+    try:
+        client = POOL.connection()
+        res_collect = -1
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        # 4. 准备sql语句
+        sql = user_sql.get('getCollect').format(content_id=collect['content_id'],
+                                                collect_type_id=collect['collect_type_id'],
+                                                user_id=collect['user_id'])
+
+        # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
+        cursor.execute(sql)
+
+        res_collect = cursor.execute(sql)
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return res_collect
+
+
+# 增加收藏数据
+def addCollect(collect):
+    try:
+        client = POOL.connection()
+        res_collect = -1
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        # 4. 准备sql语句
+        sql = user_sql.get('addCollect').format(content_id=collect['content_id'],
+                                                collect_type_id=collect['collect_type_id'],
+                                                user_id=collect['user_id'])
+
+        # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
+
+        res_collect = cursor.execute(sql)
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return res_collect
+
+
+
+# 取消收藏数据
+def subCollect(collect):
+    try:
+        client = POOL.connection()
+        res_collect = -1
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        # 4. 准备sql语句
+        sql = user_sql.get('subCollect').format(content_id=collect['content_id'],
+                                                collect_type_id=collect['collect_type_id'],
+                                                user_id=collect['user_id'])
+
+        # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
+
+        res_collect = cursor.execute(sql)
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return res_collect

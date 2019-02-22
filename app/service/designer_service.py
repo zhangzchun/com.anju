@@ -39,3 +39,6 @@ def getDesignerDetail(designer_id):
 
 
 
+if __name__ == '__main__':
+    print(getDesignerDetail(1))
+

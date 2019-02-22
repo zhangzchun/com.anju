@@ -73,4 +73,103 @@ def checkToken():
 
 
 # 用户房屋信息页面
+@user.route('/houseList/',methods=['GET','POST'])
+@checkLogin(request)
+def houseList():
+    if request.is_json and request.get_json():
+        u = request.get_json()
+
+        # result为查找用户的结果
+        res = getHouseList(u)
+        return res
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
+
+
+# 用户增加预约
+@user.route('/makeAppointment/',methods=['GET','POST'])
+# @checkLogin(request)
+def makeAppointment():
+    # 判断前端数据
+    if request.is_json and request.get_json():
+        appoint= request.get_json()
+
+        res= addAppointment(appoint)
+
+        return res
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
+# 用户取消预约
+@user.route('/cutAppointment/',methods=['GET','POST'])
+# @checkLogin(request)
+def cutAppointment():
+    # 判断前端数据
+    if request.is_json and request.get_json():
+        appoint= request.get_json()
+
+        res= subAppointment(appoint)
+        return res
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
+
+
+# 修改房屋状态
+def updateHouse():
+
+    pass
+
+
+# 获取用户收藏
+@user.route('/collectDetail/',methods=['GET','POST'])
+@checkLogin(request)
+def collectDetail():
+    if request.is_json and request.get_json():
+        collect = request.get_json()
+
+        # res为查找收藏的结果
+        res = getCollectDetail(collect)
+        return res
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
+
+
+
+# 用户收藏
+@user.route('/makeCollect/',methods=['GET','POST'])
+@checkLogin(request)
+def makeCollect():
+    if request.is_json and request.get_json():
+        collect = request.get_json()
+        # print()
+        # res为增加收藏的结果
+        print(collect)
+        res = addCollect(collect)
+
+        return res
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
+
+# 用户取消收藏
+@user.route('/cutCollect/',methods=['GET','POST'])
+@checkLogin(request)
+def cutCollect():
+    if request.is_json and request.get_json():
+        collect = request.get_json()
+
+        # res为取消收藏的结果
+        res = subCollect(collect)
+
+        return res
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
 

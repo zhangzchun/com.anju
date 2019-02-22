@@ -17,6 +17,16 @@
             {"status_code":"10010","status_text":"评论成功"},
             {"status_code":"10011","status_text":"评论失败"},
 
+            {"status_code":"10020","status_text":"预约成功"},
+            {"status_code":"10021","status_text":"预约失败"},
+
+            {"status_code":"10030","status_text":"收藏成功"},
+            {"status_code":"10031","status_text":"收藏失败"},
+
+            {"status_code":"10040","status_text":"取消收藏成功"},
+            {"status_code":"10041","status_text":"取消收藏失败"},
+
+
             {"status_code":"10011","status_text":"评论失败"},
             {"status_code":"10011","status_text":"评论失败"},
 

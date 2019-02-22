@@ -14,7 +14,6 @@ designer = Blueprint('designer',__name__)
 
 # restful api
 
-
 # 设计师列表页面
 @designer.route('/designerList/', methods=['GET','POST'])
 def designerList():

@@ -70,3 +70,103 @@ def getUser(user):
 def updatePassword():
 
     pass
+
+
+
+# 房屋信息接口
+def getHouseList(user):
+    res=userDao.getHouseList(user["user_id"])
+
+    if res:
+        if res == -1:
+            return json.dumps({"status_code":"10008","status_text":"未找到数据"})
+        else:
+            return json.dumps({"status_code": "10009", "status_text": "找到数据", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+
+
+
+# 增加预约接口
+def addAppointment(appoint):
+    res=userDao.addAppointment(appoint)
+
+    if res:
+        if res == -1:
+            return json.dumps({"status_code":"10021","status_text":"预约失败"})
+        else:
+            return json.dumps({"status_code":"10020","status_text":"预约成功", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+
+
+# 取消预约接口
+def subAppointment(appoint):
+    res=userDao.subAppointment(appoint)
+
+    if res:
+        if res == -1:
+            return json.dumps({"status_code":"10021","status_text":"取消预约失败"})
+        else:
+            return json.dumps({"status_code":"10020","status_text":"取消预约成功", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+
+
+
+# 修改房屋状态接口
+def updateHouse():
+    res=userDao.updateHouse()
+    pass
+    # 提醒
+    # userDao.updateHouse()
+
+
+
+# 用户收藏接口
+def getCollectDetail(collect):
+    res=userDao.getCollectDetail(collect)
+
+    if res:
+        if res == -1:
+            return json.dumps({"status_code":"10008","status_text":"未找到数据"})
+        else:
+            return json.dumps({"status_code": "10009", "status_text": "找到数据", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+
+
+
+
+
+# 增加收藏接口
+def addCollect(collect):
+
+    res=userDao.addCollect(collect)
+    print(res)
+
+    if res:
+        if res == -1:
+            return json.dumps({"status_code":"10031","status_text":"收藏失败",})
+        else:
+            return json.dumps({"status_code":"10030","status_text":"收藏成功", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+
+    # 提醒
+    # userDao.addCollect()
+
+
+# 取消收藏接口
+def subCollect(collect):
+
+    res=userDao.subCollect(collect)
+    if res:
+        if res == -1:
+            return json.dumps({"status_code":"10041","status_text":"取消收藏失败",})
+        else:
+            return json.dumps({"status_code":"10040","status_text":"取消收藏成功", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+    # 提醒
+    # userDao.subCollect()
