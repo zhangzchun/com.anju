@@ -4,6 +4,7 @@
 from flask import Blueprint,request
 # 导入search_service模块
 from app.service.comment_service import *
+from app.utils.my_token import checkLogin
 # 导入json
 import json
 
@@ -15,6 +16,7 @@ comment = Blueprint('comment',__name__)
 
 # 评论数据
 @comment.route('/comments/', methods=['GET', 'POST'])
+@checkLogin(request)
 def comments():
     # 获取评论数据
     if request.method=="GET":
@@ -36,6 +38,7 @@ def comments():
 
 # 回复数据
 @comment.route('/replys/', methods=['GET', 'POST'])
+@checkLogin(request)
 def replys():
     # 获取回复数据
     if request.method == "GET":
