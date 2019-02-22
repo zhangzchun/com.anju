@@ -10,6 +10,7 @@ from app.route_designer import designer
 from app.route_diary import diary
 
 from app.route_search import search
+from app.route_comment import comment
 
 from app.route_strategy import strategy
 from app.route_user import user
@@ -27,6 +28,8 @@ app.register_blueprint(diary,url_prefix='/api/diary')
 
 # 搜索
 app.register_blueprint(search,url_prefix='/api/search')
+# 评论
+app.register_blueprint(comment,url_prefix='/api/comment')
 
 # 攻略
 app.register_blueprint(strategy,url_prefix='/api/strategy')

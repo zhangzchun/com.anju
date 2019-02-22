@@ -170,3 +170,28 @@ def subCollect(collect):
         return json.dumps({"status_code": "40004", "status_text": "系统错误"})
     # 提醒
     # userDao.subCollect()
+
+
+# 获取收藏接口
+def getCollectList(collect_type,user_id):
+    if collect_type=="case":
+        res = userDao.getCaseCollect(user_id)
+    elif collect_type=="company":
+        res = userDao.getCompanyCollect(user_id)
+    elif collect_type=="strategy":
+        res = userDao.getStrategyCollect(user_id)
+    elif collect_type=="diary":
+        res = userDao.getDiaryCollect(user_id)
+        for i in range(len(res)):
+            diary_img = res[i]["diary_img"].split(",")
+            res[i]["diary_img"] = diary_img
+    if res:
+        if res == -1:
+            return json.dumps({"status_code": "10008", "status_text": "未找到数据"})
+        else:
+            for r in res:
+                collect_date = str(r["collect_date"]).replace("-", "/")
+                r["collect_date"] = collect_date
+            return json.dumps({"status_code": "10009", "status_text": "找到数据", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})

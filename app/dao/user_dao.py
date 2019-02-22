@@ -207,3 +207,69 @@ def subCollect(collect):
     finally:
         client.close()
         return res_collect
+
+
+# 获取收藏的案例
+def getCaseCollect(id):
+    try:
+        client = POOL.connection()
+        case_collect=None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = user_sql["getCaseCollect"].format(user_id=id)
+        cursor.execute(sql)
+        case_collect=cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return case_collect
+
+
+# 获取收藏的公司
+def getCompanyCollect(id):
+    try:
+        client = POOL.connection()
+        company_collect=None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = user_sql["getCompanyCollect"].format(user_id=id)
+        cursor.execute(sql)
+        company_collect=cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return company_collect
+
+# 获取收藏的攻略
+def getStrategyCollect(id):
+    try:
+        client = POOL.connection()
+        strategy_collect=None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = user_sql["getStrategyCollect"].format(user_id=id)
+        cursor.execute(sql)
+        strategy_collect=cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return strategy_collect
+
+# 获取收藏的日记
+def getDiaryCollect(id):
+    try:
+        client = POOL.connection()
+        diary_collect=None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = user_sql["getDiaryCollect"].format(user_id=id)
+        cursor.execute(sql)
+        diary_collect=cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return diary_collect

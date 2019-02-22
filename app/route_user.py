@@ -62,11 +62,6 @@ def checkToken():
 
 
 
-# 用户收藏信息页面
-
-
-
-
 # 用户日记信息页面
 
 
@@ -173,3 +168,14 @@ def cutCollect():
     else:
         return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
 
+
+# 用户收藏信息页面
+@user.route("/collectList/", methods=['GET'])
+def collectList():
+    collect_type=request.args.get("collect_type")
+    user_id=request.args.get("user_id")
+    if collect_type and user_id:
+        result=getCollectList(collect_type,user_id)
+        return result
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
