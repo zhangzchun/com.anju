@@ -110,27 +110,45 @@ def addAppointment(appoint):
         client.close()
         return res_appoint
 
-
-def subAppointment(appoint):
+# 获取预约数据
+def getAppointment(id):
     try:
         client = POOL.connection()
-        res_appoint = -1
+        res_appointment = None
         cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
         # 4. 准备sql语句
-        sql = user_sql.get('subAppointment').format(house_id=appoint['house_id'],
-                                                    company_id=appoint['company_id'],
-                                                    user_id=appoint['user_id'])
+        sql = user_sql.get('getAppointment').format(user_id=id)
 
         # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
 
-        res_appoint = cursor.execute(sql)
+        cursor.execute(sql)
+        res_appointment =cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return res_appointment
+
+
+# 取消预约
+def subAppointment(id):
+    try:
+        client = POOL.connection()
+        res_appoint = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        # 4. 准备sql语句
+        sql = user_sql.get('subAppointment').format(id=id)
+
+        # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
+
+        res_appoint = cursor.execute(sql) or -1
         client.commit()
     except Exception as ex:
         client.rollback()
     finally:
         client.close()
         return res_appoint
-
 
 
 # 修改房屋状态数据
@@ -273,3 +291,4 @@ def getDiaryCollect(id):
     finally:
         client.close()
         return diary_collect
+

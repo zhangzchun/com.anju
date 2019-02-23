@@ -15,15 +15,17 @@ user_sql={
                   from house inner join house_type on house.house_type_id=house_type.id \
                   where user_id={id}",
 
-
-
+    "getAppointment":"SELECT a.id, c.company_icon, c.`name` company_name, c.case_num, c.work_site_num, c.contact_tel, \
+                    hy.`name` house_type, h.area, h.address, h.village, a.appointment_status\
+                    from appointment a INNER JOIN company c INNER JOIN house h INNER JOIN house_type hy\
+                    ON a.company_id=c.id and a.house_id=h.id and h.house_type_id=hy.id\
+                    where a.user_id={user_id}",
 
     "addAppointment":"insert into appointment(house_id,company_id,user_id) \
                           values('{house_id}','{company_id}','{user_id}')",
 
 
-    "subAppointment":"delete from appointment where house_id={house_id} \
-                      and company_id={company_id} and user_id={user_id}",
+    "subAppointment":"delete from appointment where id={id}",
 
     "updateHouse":"",
 

@@ -100,10 +100,21 @@ def addAppointment(appoint):
         return json.dumps({"status_code": "40004", "status_text": "系统错误"})
 
 
-# 取消预约接口
-def subAppointment(appoint):
-    res=userDao.subAppointment(appoint)
+# 获取预约接口
+def getAppointment(user_id):
+    res=userDao.getAppointment(user_id)
+    if res:
+        if res == -1:
+            return json.dumps({"status_code":"10008","status_text":"未找到数据"})
+        else:
+            return json.dumps({"status_code":"10009","status_text":"找到数据", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
 
+
+# 取消预约接口
+def subAppointment(id):
+    res=userDao.subAppointment(id)
     if res:
         if res == -1:
             return json.dumps({"status_code":"10021","status_text":"取消预约失败"})
@@ -182,9 +193,10 @@ def getCollectList(collect_type,user_id):
         res = userDao.getStrategyCollect(user_id)
     elif collect_type=="diary":
         res = userDao.getDiaryCollect(user_id)
-        for i in range(len(res)):
-            diary_img = res[i]["diary_img"].split(",")
-            res[i]["diary_img"] = diary_img
+        if res and res != -1:
+            for i in range(len(res)):
+                diary_img = res[i]["diary_img"].split(",")
+                res[i]["diary_img"] = diary_img
     if res:
         if res == -1:
             return json.dumps({"status_code": "10008", "status_text": "未找到数据"})

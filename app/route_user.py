@@ -98,18 +98,29 @@ def makeAppointment():
         return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
 
 
+
+# 用户获得预约
+@user.route('/getAppointments/',methods=['GET','POST'])
+# @checkLogin(request)
+def getAppointments():
+    user_id=request.args.get("user_id")
+    result=getAppointment(user_id)
+    return result
+
+
+
 # 用户取消预约
 @user.route('/cutAppointment/',methods=['GET','POST'])
 # @checkLogin(request)
 def cutAppointment():
     # 判断前端数据
-    if request.is_json and request.get_json():
-        appoint= request.get_json()
-
-        res= subAppointment(appoint)
+    id=request.args.get("id")
+    if id:
+        res= subAppointment(id)
         return res
     else:
         return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
 
 
 
