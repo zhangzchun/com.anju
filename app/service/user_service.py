@@ -207,3 +207,20 @@ def getCollectList(collect_type,user_id):
             return json.dumps({"status_code": "10009", "status_text": "找到数据", "content": res})
     else:
         return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+
+
+# 获取用户日记接口
+def getUserDiary(user_id):
+    res=userDao.getUserDiary(user_id)
+    if res:
+        if res == -1:
+            return json.dumps({"status_code":"10008","status_text":"未找到数据"})
+        else:
+            print(res)
+            for i in range(len(res)):
+                public_date = str(res[i]["public_date"]).replace("-", "/")
+                res[i]["public_date"] = public_date
+            print(res)
+            return json.dumps({"status_code": "10009", "status_text": "找到数据", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})

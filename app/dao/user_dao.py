@@ -191,7 +191,9 @@ def addCollect(collect):
         # 4. 准备sql语句
         sql = user_sql.get('addCollect').format(content_id=collect['content_id'],
                                                 collect_type_id=collect['collect_type_id'],
-                                                user_id=collect['user_id'])
+                                                user_id=collect['user_id'],
+                                                collect_date=collect['collect_date']
+                                                )
 
         # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
 
@@ -291,4 +293,27 @@ def getDiaryCollect(id):
     finally:
         client.close()
         return diary_collect
+
+
+
+# 获取用户日记
+def getUserDiary(user_id):
+    try:
+        client = POOL.connection()
+        res_diary = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        # 4. 准备sql语句
+        sql = user_sql.get('getUserDiary').format(id=user_id)
+
+        # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
+        cursor.execute(sql)
+        res_diary = cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return res_diary
+
+
 

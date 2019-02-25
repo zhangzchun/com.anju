@@ -156,7 +156,6 @@ def makeCollect():
         collect = request.get_json()
         # print()
         # res为增加收藏的结果
-        print(collect)
         res = addCollect(collect)
 
         return res
@@ -187,6 +186,18 @@ def collectList():
     user_id=request.args.get("user_id")
     if collect_type and user_id:
         result=getCollectList(collect_type,user_id)
+        return result
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
+# 获取用户日记
+@user.route('/userDiary/',methods=['GET','POST'])
+def userDiary():
+    user_id = request.args.get("user_id")
+    if user_id:
+        result = getUserDiary(user_id)
+        print(result)
         return result
     else:
         return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})

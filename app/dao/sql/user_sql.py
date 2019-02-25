@@ -27,14 +27,14 @@ user_sql={
 
     "subAppointment":"delete from appointment where id={id}",
 
-    "updateHouse":"",
+    "updateHouse":"update house set house_status='已定装修公司' where id={id}",
 
 
     "getCollect":"select id from where where content_id={content_id} \
                           and collect_type_id={collect_type_id} and user_id={user_id}",
 
     "addCollect":"insert into collect(content_id,collect_type_id,user_id)\
-                          values('{content_id}','{collect_type_id}','{user_id}')",
+                          values('{content_id}','{collect_type_id}','{user_id}','{collect_date}')",
 
 
     "subCollect":"delete from collect where content_id={content_id} \
@@ -61,5 +61,12 @@ user_sql={
                         from collect c INNER JOIN collect_type ct INNER JOIN `user` u INNER JOIN strategy s \
                         INNER JOIN strategy_content sc INNER JOIN strategy_img si\
                         on c.collect_type_id = ct.id and c.user_id =u.id and c.content_id=s.id and s.id=sc.strategy_id \
-                        and si.strategy_id=s.id where c.user_id={user_id} and c.collect_type_id=3"
+                        and si.strategy_id=s.id where c.user_id={user_id} and c.collect_type_id=3",
+
+    "getUserDiary":"select d.id,d.diary_title,d.public_date,d.area,s.`name` as style, \
+                        rt.`name` as reno_type,d.village,d.company,count(d.id) as count\
+                        from diary as d inner join style as s inner join renovation_type as rt \
+                        inner join diary_content as dc on d.style_id = s.id \
+                        and d.renovation_type_id = rt.id and d.id = dc.diary_id \
+                        where user_id = {id} group by d.id ",
 }
