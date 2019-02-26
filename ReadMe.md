@@ -17,6 +17,9 @@
             {"status_code":"10010","status_text":"评论成功"},
             {"status_code":"10011","status_text":"评论失败"},
 
+            {"status_code":"10012","status_text":"添加信息成功"},
+            {"status_code":"10013","status_text":"添加信息失败"},
+
             {"status_code":"10020","status_text":"预约成功"},
             {"status_code":"10021","status_text":"预约失败"},
 

@@ -7,14 +7,36 @@ user_sql={
     "getUserByTel":"select id,telephone,nickname,password,regist_date \
                   from user where telephone={telephone} limit 1",
 
-    "updateUserById":"",
+    "getUserInfo":"select `user`.nickname,`user`.telephone,user_icon.icon,sex.gender as sex,`user`.QQ,`user`.address\
+                    from `user` INNER JOIN user_icon INNER JOIN sex\
+                    on `user`.user_icon_id=user_icon.id  and `user`.sex_id=sex.id\
+                    WHERE `user`.id={id}",
+
+    "changeUserInfo":"update `user` set nickname='{nickname}',sex_id={sex_id},QQ={QQ},address='{address}'\
+                        where id={id}",
 
 
-    "getHouseList":"select house.id, house.house_name, house_type.`name` as house_type,\
-                  house.area,house.address, house.village \
-                  from house inner join house_type on house.house_type_id=house_type.id \
-                  where user_id={id}",
+    "getIdentifyingCode":"select i.id,i.url_code,i.code_content from identifying_code as i WHERE i.id={id}",
 
+    "getPasswordById":"select `user`.`password` from `user`  WHERE `user`.id={id}",
+
+    "updatePassword":"update `user` set `password`='{password}' where id={id}",
+
+    "getHouseList":"SELECT house.id, house.house_name, house_type.`name` as house_type,\
+                      house.area,house.house_status,house.address, house.village \
+                      FROM house INNER JOIN house_type ON house.house_type_id=house_type.id \
+                      where user_id={id}",
+
+    "getHouseInfo": "SELECT house.id, house.house_name, house_type.`name` as house_type,house.area,house.house_status,house.address, house.village\
+                  FROM house INNER JOIN house_type ON house.house_type_id=house_type.id\
+                  where house.id={id}",
+
+    "addHouseInfo": "insert into house(house_name,house_type_id,area,address,house_status,user_id,village)\
+                values ('{house_name}','{house_type}','{area}','{address}','{status}','{user_id}','{village}')",
+
+    "updateHouseInfo": "update house set house_name='{house_name}',house_type_id='{house_type}',area='{area}',\
+                      address='{address}',house_status='{status}',village='{village}'\
+                      where id='{house_id}'",
     "getAppointment":"SELECT a.id, c.company_icon, c.`name` company_name, c.case_num, c.work_site_num, c.contact_tel, \
                     hy.`name` house_type, h.area, h.address, h.village, a.appointment_status\
                     from appointment a INNER JOIN company c INNER JOIN house h INNER JOIN house_type hy\
@@ -30,7 +52,7 @@ user_sql={
     "updateHouse":"update house set house_status='已定装修公司' where id={id}",
 
 
-    "getCollect":"select id from where where content_id={content_id} \
+    "getCollect":"select id from collect where content_id={content_id} \
                           and collect_type_id={collect_type_id} and user_id={user_id}",
 
     "addCollect":"insert into collect(content_id,collect_type_id,user_id)\

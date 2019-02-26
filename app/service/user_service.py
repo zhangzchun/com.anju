@@ -3,6 +3,7 @@
 import app.dao.user_dao as userDao
 # 导入json
 import json
+import random
 # 导入加密模块
 from werkzeug.security import generate_password_hash,check_password_hash
 
@@ -65,25 +66,162 @@ def getUser(user):
         return json.dumps({"status_code": "40004", "status_text": "系统错误"})
 
 
+# 获取用户信息接口
+def getUserInfo(user):
+    res = userDao.getUserInfo(user["user_id"])
+    if res:
+        if res == -1:
+            return json.dumps({"status_code": "10008", "status_text": "未找到数据"})
+        else:
+            return json.dumps({"status_code": "10009", "status_text": "找到数据", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+
+
+# 修改用户信息
+def changeUserInfo(info):
+    if info:
+        res=userDao.changeUserInfo(info)
+        if res:
+            return json.dumps({"status_code":"10012","status_text":"添加信息成功"})
+        else:
+            return json.dumps({"status_code":"10013","status_text": "添加信息失败"})
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
+# 获取验证码
+def getIdentifyingCode():
+    id=random.choice(range(1,26))
+    res=userDao.getIdentifyingCode(id)
+    if res:
+        return json.dumps({"status_code": "10009", "status_text": "找到数据","content":res})
+    else:
+        return json.dumps({"status_code": "10008", "status_text": "未找到数据"})
+
+
+
+# 验证前端验证码
+def checkCode(info):
+    if info:
+        res=userDao.getIdentifyingCode(info['code_id'])
+        if res['code_content']==info['content']:
+            return json.dumps({"status_code": "10009", "status_text": "找到数据"})
+        else:
+            return json.dumps({"status_code": "10008", "status_text": "未找到数据"})
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
 
 # 修改密码接口
-def updatePassword():
-
-    pass
+def updatePassword(info):
+    if info:
+        res=userDao.getPasswordById(info['user_id'])
+        print(res['password'])
+        # 验证密码是否相同
+        if (check_password_hash(res['password'], info['old_password'])):
+            # 密码加密
+            pf = generate_password_hash(info['new_password'], method='pbkdf2:sha1:1001', salt_length=8)
+            info['new_password'] = pf
+            res=userDao.updatePassword(info)
+            if res:
+                return json.dumps({"status_code":"10012","status_text":"添加信息成功"})
+            else:
+                return json.dumps({"status_code":"10013","status_text": "添加信息失败"})
+        else:
+            return json.dumps({"status_code": "10005", "status_text": "密码错误"})
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
 
 
 
 # 房屋信息接口
 def getHouseList(user):
-    res=userDao.getHouseList(user["user_id"])
-
-    if res:
-        if res == -1:
-            return json.dumps({"status_code":"10008","status_text":"未找到数据"})
+    if user["house_id"]:
+        res=userDao.getHouseInfo(user["house_id"])
+        if res:
+            if res == -1:
+                return json.dumps({"status_code":"10008","status_text":"未找到数据"})
+            else:
+                return json.dumps({"status_code": "10009", "status_text": "找到数据", "content": res})
         else:
-            return json.dumps({"status_code": "10009", "status_text": "找到数据", "content": res})
+            return json.dumps({"status_code": "40004", "status_text": "系统错误"})
     else:
-        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+        res=userDao.getHouseList(user["user_id"])
+        if res:
+            if res == -1:
+                return json.dumps({"status_code":"10008","status_text":"未找到数据"})
+            else:
+                return json.dumps({"status_code": "10009", "status_text": "找到数据", "content": res})
+        else:
+            return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+
+
+
+# 新增房屋信息
+def addHouseInfo(info):
+    if info:
+        if info['house_type']=='小户型':
+            info['house_type']=8
+        elif info['house_type']=='一居':
+            info['house_type']=1
+        elif info['house_type']=='二居':
+            info['house_type']=2
+        elif info['house_type']=='三居':
+            info['house_type']=3
+        elif info['house_type']=='四居':
+            info['house_type']=4
+        elif info['house_type']=='复式':
+            info['house_type']=5
+        elif info['house_type']=='别墅':
+            info['house_type']=6
+        elif info['house_type']=='公寓':
+            info['house_type']=7
+
+        res=userDao.addHouseInfo(info)
+        if res:
+            return json.dumps({"status_code":"10012","status_text":"添加信息成功"})
+        else:
+            return json.dumps({"status_code":"10013","status_text": "添加信息失败"})
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
+
+# 修改房屋信息
+def updateHouseInfo(info):
+    if info:
+        if info['house_type']=='小户型':
+            info['house_type']=8
+        elif info['house_type']=='一居':
+            info['house_type']=1
+        elif info['house_type']=='二居':
+            info['house_type']=2
+        elif info['house_type']=='三居':
+            info['house_type']=3
+        elif info['house_type']=='四居':
+            info['house_type']=4
+        elif info['house_type']=='复式':
+            info['house_type']=5
+        elif info['house_type']=='别墅':
+            info['house_type']=6
+        elif info['house_type']=='公寓':
+            info['house_type']=7
+
+        res=userDao.updateHouseInfo(info)
+        if res:
+            return json.dumps({"status_code":"10012","status_text":"添加信息成功"})
+        else:
+            return json.dumps({"status_code":"10013","status_text": "添加信息失败"})
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
+
+
+
+
 
 
 

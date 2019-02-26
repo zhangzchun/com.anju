@@ -47,22 +47,63 @@ def login():
 def checkToken():
     return json.dumps({"status_code":"10003","status_text":"登录成功"})
 
+# 获取用户信息页面
+@user.route('/getUserInfo/',methods=['GET','POST'])
+def UserInfo():
+    if request.is_json and request.get_json():
+        u = request.get_json()
+        res = getUserInfo(u)
+        return res
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
+
+
+
+
 # 修改用户信息页面
+@user.route('/changeUserInfo/',methods=['GET','POST'])
+def changeInfo():
+    if request.is_json and request.get_json():
+        info = request.get_json()
+        res = changeUserInfo(info)
+        return res
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
+# 获取验证码
+@user.route('/getIdentifyingCode/',methods=['GET','POST'])
+def getCode():
+    if request.method=='GET':
+        res = getIdentifyingCode()
+        return res
+    elif request.method=='POST':
+        if request.is_json and request.get_json():
+            info = request.get_json()
+            res = checkCode(info)
+            return res
+        else:
+            return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
 
 
 
 
 # 修改密码页面
+@user.route('/changePassword/',methods=['GET','POST'])
+def changeUserPassword():
+    if request.is_json and request.get_json():
+        info = request.get_json()
+        print(info)
+        res = updatePassword(info)
+        print(res)
+        return res
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
 
 
 
-
-# 用户预约信息页面
-
-
-
-
-# 用户日记信息页面
 
 
 
@@ -73,12 +114,38 @@ def checkToken():
 def houseList():
     if request.is_json and request.get_json():
         u = request.get_json()
-
-        # result为查找用户的结果
         res = getHouseList(u)
         return res
     else:
         return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
+
+# 用户房屋信息页面
+@user.route('/houseInfo/',methods=['GET','POST'])
+def houseInfo():
+    if request.is_json and request.get_json():
+        info = request.get_json()
+        print(info)
+        res = addHouseInfo(info)
+        print(res)
+        return res
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
+
+
+#编辑房屋信息
+@user.route('/updateHouseInfo/',methods=['GET','POST'])
+def updateInfo():
+    if request.is_json and request.get_json():
+        info = request.get_json()
+        res = updateHouseInfo(info)
+        return res
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
 
 
 

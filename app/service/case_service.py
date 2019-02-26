@@ -74,4 +74,6 @@ def getCaseDetail(id):
     # 提醒
     # caseDao.getCaseDetail()
 
-
+if __name__ == '__main__':
+      res=getCaseDetail(1)
+      print(res)

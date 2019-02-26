@@ -61,6 +61,176 @@ def getUserByTel(tel):
 
 
 
+# 获取用户数据
+def getUserInfo(id):
+    try:
+        client = POOL.connection()
+        user = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = user_sql.get('getUserInfo').format(id=id)
+        cursor.execute(sql)
+        user = cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return user
+
+
+# 修改用户数据
+def changeUserInfo(info):
+    try:
+        client = POOL.connection()
+        user = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = user_sql.get('changeUserInfo').format(nickname=info['nickname'], sex_id=info['sex_id'],
+                                                    QQ=info['QQ'], address=info['address'],id=info['id'])
+        user = cursor.execute(sql) or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return user
+
+
+#  获取验证码
+def getIdentifyingCode(id):
+    try:
+        client = POOL.connection()
+        code = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = user_sql.get('getIdentifyingCode').format(id=id)
+        cursor.execute(sql)
+        code = cursor.fetchone() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return code
+
+
+
+
+# 通过id找密码
+def getPasswordById(id):
+    try:
+        client = POOL.connection()
+        password = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = user_sql.get('getPasswordById').format(id=id)
+        cursor.execute(sql)
+        password = cursor.fetchone() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return password
+
+# 修改密码
+def updatePassword(info):
+    try:
+        client = POOL.connection()
+        password = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = user_sql.get('updatePassword').format(password=info['new_password'],id=info['user_id'])
+        password = cursor.execute(sql) or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return password
+
+
+
+# 获取用户所有房屋信息数据
+def getHouseList(id):
+    try:
+        client = POOL.connection()
+        res_house = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        # 4. 准备sql语句
+        sql = user_sql.get('getHouseList').format(id=id)
+        cursor.execute(sql)
+        res_house = cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return res_house
+
+
+# 获取用户修改的房屋信息数据
+def getHouseInfo(id):
+    try:
+        client = POOL.connection()
+        res_house = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        # 4. 准备sql语句
+        sql = user_sql.get('getHouseInfo').format(id=id)
+        cursor.execute(sql)
+        res_house = cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return res_house
+
+
+
+
+
+
+#  新增房屋信息
+def addHouseInfo(info):
+    try:
+        client = POOL.connection()
+        house = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = user_sql.get('addHouseInfo').format(house_name=info['house_name'],house_type=info['house_type'],
+                        area=info['area'],address=info['address'],status=info['house_status'],user_id=info['user_id'],village=info['village'])
+
+        house = cursor.execute(sql) or -1
+        client.commit()
+
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        print(house)
+        return house
+
+
+
+# 修改房屋信息
+def updateHouseInfo(info):
+    try:
+        client = POOL.connection()
+        house = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = user_sql.get('updateHouseInfo').format(house_name=info['house_name'],house_type=info['house_type'],
+                        area=info['area'],address=info['address'],status=info['house_status'],village=info['village'],house_id=info['house_id'])
+
+        house = cursor.execute(sql) or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return house
+
+
+
+
+
+
+
 # 修改用户数据
 def updateUser(user):
     pass
@@ -72,14 +242,14 @@ def updateUser(user):
 def getHouseList(id):
     try:
         client = POOL.connection()
-        res_house = -1
+        res_house = None
         cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
         # 4. 准备sql语句
         sql = user_sql.get('getHouseList').format(id=id)
 
         # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
         cursor.execute(sql)
-        res_house = cursor.fetchall()
+        res_house = cursor.fetchall() or -1
         client.commit()
     except Exception as ex:
         client.rollback()
@@ -93,7 +263,7 @@ def getHouseList(id):
 def addAppointment(appoint):
     try:
         client = POOL.connection()
-        res_appoint = -1
+        res_appoint = None
         cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
         # 4. 准备sql语句
         sql = user_sql.get('addAppointment').format(house_id=appoint['house_id'],
@@ -102,7 +272,7 @@ def addAppointment(appoint):
 
         # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
 
-        res_appoint = cursor.execute(sql)
+        res_appoint = cursor.execute(sql) or -1
         client.commit()
     except Exception as ex:
         client.rollback()
@@ -163,7 +333,7 @@ def updateHouse(house_id):
 def getCollectDetail(collect):
     try:
         client = POOL.connection()
-        res_collect = -1
+        res_collect = None
         cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
         # 4. 准备sql语句
         sql = user_sql.get('getCollect').format(content_id=collect['content_id'],
@@ -173,7 +343,7 @@ def getCollectDetail(collect):
         # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
         cursor.execute(sql)
 
-        res_collect = cursor.execute(sql)
+        res_collect = cursor.fetchone() or -1
         client.commit()
     except Exception as ex:
         client.rollback()
@@ -186,7 +356,7 @@ def getCollectDetail(collect):
 def addCollect(collect):
     try:
         client = POOL.connection()
-        res_collect = -1
+        res_collect = None
         cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
         # 4. 准备sql语句
         sql = user_sql.get('addCollect').format(content_id=collect['content_id'],
@@ -197,7 +367,7 @@ def addCollect(collect):
 
         # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
 
-        res_collect = cursor.execute(sql)
+        res_collect = cursor.execute(sql) or -1
         client.commit()
     except Exception as ex:
         client.rollback()
@@ -211,7 +381,7 @@ def addCollect(collect):
 def subCollect(collect):
     try:
         client = POOL.connection()
-        res_collect = -1
+        res_collect = None
         cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
         # 4. 准备sql语句
         sql = user_sql.get('subCollect').format(content_id=collect['content_id'],
@@ -220,7 +390,7 @@ def subCollect(collect):
 
         # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
 
-        res_collect = cursor.execute(sql)
+        res_collect = cursor.execute(sql) or -1
         client.commit()
     except Exception as ex:
         client.rollback()
