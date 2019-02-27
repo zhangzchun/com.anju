@@ -14,19 +14,20 @@ comment = Blueprint('comment',__name__)
 
 # restful api
 
-# 评论数据
-@comment.route('/comments/', methods=['GET', 'POST'])
-@checkLogin(request)
-def comments():
-    # 获取评论数据
+# 获取评论数据
+@comment.route('/getComment/', methods=['GET', 'POST'])
+def getComment():
     if request.method=="GET":
         id=request.url.split("?")[1].split("=")
-        print(id)
-
         result=getComments(id)
         return result
-    # 插入评论数据
-    elif request.method=="POST":
+
+
+# 插入评论数据
+@comment.route('/postComment/', methods=['GET', 'POST'])
+@checkLogin(request)
+def postComment():
+    if request.method=="POST":
         if request.is_json and request.get_json():
             data=request.get_json()
             result=postComments(data)
@@ -35,26 +36,28 @@ def comments():
             return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
 
 
-
-# 回复数据
-@comment.route('/replys/', methods=['GET', 'POST'])
-@checkLogin(request)
-def replys():
-    # 获取回复数据
+# 获取回复数据
+@comment.route('/getReply/', methods=['GET', 'POST'])
+def getReply():
     if request.method == "GET":
         id = request.args.get("comment_id")
         result = getReplys(id)
         return result
+
+
+
+# 回复数据
+@comment.route('/postReply/', methods=['GET', 'POST'])
+@checkLogin(request)
+def postReply():
     # 插入回复数据
-    elif request.method == "POST":
+    if request.method == "POST":
         if request.is_json and request.get_json():
             data=request.get_json()
             result=postReplys(data)
             return result
         else:
             return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
-
-
 
 
 
