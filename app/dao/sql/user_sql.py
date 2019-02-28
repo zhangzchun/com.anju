@@ -55,7 +55,7 @@ user_sql={
     "getCollect":"select id from collect where content_id={content_id} \
                           and collect_type_id={collect_type_id} and user_id={user_id}",
 
-    "addCollect":"insert into collect(content_id,collect_type_id,user_id)\
+    "addCollect":"insert into collect(content_id,collect_type_id,user_id,collect_date)\
                           values('{content_id}','{collect_type_id}','{user_id}','{collect_date}')",
 
 
@@ -91,4 +91,14 @@ user_sql={
                         inner join diary_content as dc on d.style_id = s.id \
                         and d.renovation_type_id = rt.id and d.id = dc.diary_id \
                         where user_id = {id} group by d.id ",
+
+    "addDiary": "insert into diary(diary_title, public_date, user_id, area, style_id, \
+        renovation_type_id, village, company) values('{diary_title}', '{public_date}'\
+        ,'{user_id}','{area}', '{style_id}','{renovation_type_id}','{village}','{company}',)",
+
+    "getDiaryByUser": "select id from diary where user_id={user_id} order by id desc limit 1",
+
+    "getDiaryById": "select id from diary where id={id}",
+
+    "updateDiaryById": "update diary set diary_title={diary_title}where id={id}",
 }

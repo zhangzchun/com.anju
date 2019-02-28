@@ -18,7 +18,8 @@ POOL = PooledDB(
     port=3306,
     user='root',
     # password='admin',
-    password='123456',
+    # password='123456',
+    password='asd147.',
     database='renovationdb',
     charset='utf8'
 )

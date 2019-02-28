@@ -17,7 +17,7 @@ designer_sql={
                         inner join case_img as ci inner join renovation_type as rt \
                         on c.designer_id = d.id and c.style_id = s.id and d.company_id = com.id \
                         and c.house_type_id = ht.id and c.id = ci.case_id \
-                        and c.renovation_type_id = rt.id where d.id = {id}'
+                        and c.renovation_type_id = rt.id where d.id = {id} group by case_id'
 
 
 }

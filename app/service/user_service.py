@@ -362,3 +362,16 @@ def getUserDiary(user_id):
             return json.dumps({"status_code": "10009", "status_text": "找到数据", "content": res})
     else:
         return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+
+
+
+def addDiary(diary):
+    res = userDao.addDiary(diary)
+
+    if res:
+        if res == -1:
+            return json.dumps({"status_code": "10013", "status_text": "添加信息失败"})
+        else:
+            return json.dumps({"status_code": "10012", "status_text": "添加信息成功", "content": res})
+    else:
+        return json.dumps({"status_code": "40004", "status_text": "系统错误"})

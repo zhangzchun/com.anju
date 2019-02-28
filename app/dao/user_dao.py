@@ -323,7 +323,22 @@ def subAppointment(id):
 
 # 修改房屋状态数据
 def updateHouse(house_id):
-    pass
+    try:
+        client = POOL.connection()
+        res_house = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        # 4. 准备sql语句
+        sql = user_sql.get('updateHouse').format(id=house_id)
+
+        # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
+        cursor.execute(sql)
+        res_house = cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return res_house
 
 
 
@@ -466,7 +481,7 @@ def getDiaryCollect(id):
 
 
 
-# 获取用户日记
+# 获取用户日记数据
 def getUserDiary(user_id):
     try:
         client = POOL.connection()
@@ -478,6 +493,58 @@ def getUserDiary(user_id):
         # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
         cursor.execute(sql)
         res_diary = cursor.fetchall() or -1
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+        client.close()
+        return res_diary
+
+
+# 添加用户日记数据
+def addDiary(diary):
+    try:
+        client = POOL.connection()
+        res_diary = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        # 4. 准备sql语句
+        sql = user_sql.get('addDiary').format(diary_title=diary['diary_title'],
+                                              public_date=diary['public_date'],
+                                              user_id=diary['user_id'],
+                                              area=diary['area'],
+                                              style_id=diary['style_id'],
+                                              renovation_type_id=diary['renovation_type_id'],
+                                              village=diary['village'],
+                                              company=diary['company']
+                                              )
+
+        # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
+
+        res_diary = cursor.execute(sql)
+        client.commit()
+    except Exception as ex:
+        client.rollback()
+    finally:
+
+        if res_diary==1:
+            res_diary= getDiaryByUser(diary['user_id'])
+        client.close()
+        return res_diary
+
+
+
+# 获取用户最新日记id
+def getDiaryByUser(user_id):
+    try:
+        client = POOL.connection()
+        res_diary = None
+        cursor = client.cursor(cursor=pymysql.cursors.DictCursor)
+        # 4. 准备sql语句
+        sql = user_sql.get('getDiaryByUser').format(user_id=user_id,)
+
+        # 5. 通过游标进行操作,execute()执行sql语句,这时结果为：1.如果插入成功返回受影响的行数 2. 如果插入失败返回None
+
+        res_diary = cursor.execute(sql)
         client.commit()
     except Exception as ex:
         client.rollback()

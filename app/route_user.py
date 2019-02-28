@@ -268,3 +268,18 @@ def userDiary():
         return result
     else:
         return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
+
+# 添加用户日记
+@user.route('/makeDiary/',methods=['GET','POST'])
+def makeDiary():
+    if request.is_json and request.get_json():
+        diary = request.get_json()
+
+        # res为添加日记的结果
+        res = addDiary(diary)
+
+        return res
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
