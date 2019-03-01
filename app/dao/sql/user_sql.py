@@ -68,22 +68,22 @@ user_sql={
                     INNER JOIN house_type ht INNER JOIN renovation_type rt\
                     on c.content_id=`case`.id and `case`.id=ci.case_id and `case`.style_id=s.id \
                     and `case`.house_type_id=ht.id and `case`.renovation_type_id=rt.id\
-                    where c.user_id={user_id} and c.collect_type_id=2 GROUP BY `case`.id",
+                    where c.user_id={user_id} and c.collect_type_id=4 GROUP BY `case`.id",
 
     "getCompanyCollect":"select company.id , company.company_icon, company.`name`, company.case_num, company.work_site_num,\
                         company.contact_tel,c.collect_date from collect c INNER JOIN company on c.content_id=company.id\
-                        where c.user_id={user_id} and c.collect_type_id=1",
+                        where c.user_id={user_id} and c.collect_type_id=3",
 
     "getDiaryCollect":"SELECT d.id diary_id ,u.nickname,ui.icon , d.diary_title , s.`name` style_name ,d.company ,c.collect_date ,dc.diary_content,\
                         (SELECT group_concat(di.diary_img) FROM diary_img di WHERE di.diary_content_id = dc.id && dc.diary_id=d.id) diary_img \
                         FROM collect c INNER JOIN `user` u INNER JOIN user_icon ui INNER JOIN diary d INNER JOIN style s INNER JOIN diary_content dc \
                         on  u.user_icon_id=ui.id and c.content_id=d.id and d.user_id=u.id and d.style_id=s.id  and d.id=dc.diary_id \
-                        where c.user_id={user_id}  and c.collect_type_id=4 and dc.stage='前期准备' ",
+                        where c.user_id={user_id}  and c.collect_type_id=1 and dc.stage='前期准备' ",
     "getStrategyCollect":"select s.id , si.strategy_img,s.strategy_title, sc.lead, c.collect_date \
                         from collect c INNER JOIN collect_type ct INNER JOIN `user` u INNER JOIN strategy s \
                         INNER JOIN strategy_content sc INNER JOIN strategy_img si\
                         on c.collect_type_id = ct.id and c.user_id =u.id and c.content_id=s.id and s.id=sc.strategy_id \
-                        and si.strategy_id=s.id where c.user_id={user_id} and c.collect_type_id=3",
+                        and si.strategy_id=s.id where c.user_id={user_id} and c.collect_type_id=2",
 
     "getUserDiary":"select d.id,d.diary_title,d.public_date,d.area,s.`name` as style, \
                         rt.`name` as reno_type,d.village,d.company,count(d.id) as count\

@@ -292,7 +292,6 @@ def getCollectDetail(collect):
 def addCollect(collect):
 
     res=userDao.addCollect(collect)
-    print(res)
 
     if res:
         if res == -1:
