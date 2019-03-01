@@ -13,12 +13,23 @@ case = Blueprint('case',__name__)
 
 # restful api
 
+
+@case.route('/caseNumber/',methods=['GET','POST'])
+def caseNum():
+    if request.is_json and request.get_json():
+        condition = request.get_json()
+        res=getCaseNum(condition)
+        return res
+    else:
+        return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
+
+
 # 案例列表页面
 @case.route('/caseList/',methods=['GET','POST'])
 def caseList():
-    company_id = request.args.get("company_id")
-    if company_id:
-        res = getCaseList(company_id)
+    if request.is_json and request.get_json():
+        condition = request.get_json()
+        res = getCaseList(condition)
         return res
     else:
         return json.dumps({"status_code": "40005", "status_text": "数据格式不合法"})
@@ -27,7 +38,6 @@ def caseList():
 # 案例筛选页面
 @case.route('/caseScreen/',methods=['GET','POST'])
 def caseScreen():
-
     if request.is_json and request.get_json():
         condition = request.get_json()
         res = getCaseScreen(condition)
