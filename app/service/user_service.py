@@ -48,7 +48,7 @@ def getUser(user):
     res_user = userDao.getUserByTel(user['telephone'])
     if res_user:
         if res_user == -1:
-            return json.dumps({"status_code": "10004", "status_text": "该用户不存在"})
+            return json.dumps({"status_code": "40004", "status_text": "系统错误"})
         else:
             # 验证密码是否相同
             if (check_password_hash(res_user['password'], user['password'])):
@@ -63,7 +63,7 @@ def getUser(user):
             else:
                 return json.dumps({"status_code": "10005", "status_text": "密码错误"})
     else:
-        return json.dumps({"status_code": "40004", "status_text": "系统错误"})
+        return json.dumps({"status_code": "10004", "status_text": "该用户不存在"})
 
 
 # 获取用户信息接口
